@@ -1,5 +1,5 @@
 """
-WSGI config for food_delivery project.
+WSGI config for nwasellk_backend project.
 
 It exposes the WSGI callable as a module-level variable named ``application``.
 
@@ -11,6 +11,6 @@ import os
 
 from django.core.wsgi import get_wsgi_application
 
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'food_delivery.settings')
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'nwasellk_backend.settings')
 
 application = get_wsgi_application()

@@ -1,19 +1,14 @@
-import time
-from datetime import datetime, timedelta
+import uuid
 
-import jwt
-from django.db import models
 from django.contrib.auth.models import AbstractBaseUser
 from django.contrib.auth.models import PermissionsMixin
+from django.db import models
 from django.utils.translation import gettext_lazy as _
-from django.utils import timezone
 
-
-from food_delivery import settings
 from .managers import CustomUserManager
 
 
-class Role(models.Model):
+class CustomUser(AbstractBaseUser, PermissionsMixin):
     DRIVER = 1
     CUSTOMER = 2
     RESTAURANT = 3
@@ -24,17 +19,10 @@ class Role(models.Model):
         (RESTAURANT, 'restaurant'),
         (ADMIN, 'admin')
     )
-
-    id = models.PositiveSmallIntegerField(choices=ROLE_CHOICES, primary_key=True)
-
-    def __str__(self):
-        return self.get_id_display()
-
-
-class CustomUser(AbstractBaseUser, PermissionsMixin):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     email = models.EmailField(_('email address'), unique=True)
     username = models.CharField(null=True, max_length=256)
-    role = models.ManyToManyField(Role, blank=False, default=Role.CUSTOMER)
+    role = models.SmallIntegerField(blank=False, default=CUSTOMER)
     created_at = models.DateTimeField(auto_now_add=True, null=True, blank=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -48,3 +36,6 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
 
     def __str__(self):
         return self.email
+
+    def get_role_name(self):
+        return self.ROLE_CHOICES[self.role]
