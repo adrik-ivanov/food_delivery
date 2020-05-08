@@ -9,8 +9,7 @@ from apis.user.models import CustomUser
 
 
 class Driver(models.Model):
-    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+    user = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
     name = models.CharField(max_length=256, null=True)
     avatar = models.URLField(max_length=1024, null=False, default='')
     birthday = models.DateField(default=timezone.now, null=False)
@@ -25,7 +24,7 @@ class Driver(models.Model):
 
 class Verification(models.Model):
 
-    user = models.ForeignKey(Driver, on_delete=models.CASCADE)
+    user = models.OneToOneField(Driver, on_delete=models.CASCADE)
     id_card = models.URLField(max_length=1024, default='')
     driver_license = models.URLField(max_length=1024, default='')
     vehicle_license = models.URLField(max_length=1024, default='')
@@ -33,3 +32,6 @@ class Verification(models.Model):
     description = models.CharField(max_length=1024, default='')
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
+
+# class Bill

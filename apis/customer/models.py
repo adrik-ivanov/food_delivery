@@ -8,8 +8,7 @@ from apis.user.models import CustomUser
 
 
 class Customer(models.Model):
-    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+    user = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
     name = models.CharField(max_length=256, null=True)
     phone_number = PhoneNumberField(blank=True, help_text='Contact phone number')
     fcm_token = models.CharField(max_length=256, default='')
@@ -20,7 +19,7 @@ class Customer(models.Model):
 
 class Address(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+    user = models.ForeignKey(Customer, on_delete=models.CASCADE)
     latitude = models.DecimalField(max_digits=20, decimal_places=15, null=False, default=0.0)
     longitude = models.DecimalField(max_digits=20, decimal_places=15, null=False, default=0.0)
     formatted_address = models.CharField(max_length=1024, default='', blank=True,)

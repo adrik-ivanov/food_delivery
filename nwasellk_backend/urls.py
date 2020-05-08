@@ -20,7 +20,10 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/v1/', include('apis.user.urls'))
+    path('api/v1/user/', include('apis.user.urls')),
+    path('api/v1/customer/', include('apis.customer.urls')),
+    path('api/v1/restaurant/', include('apis.restaurants.urls')),
+    path('api/v1/driver/', include('apis.driver.urls'))
 ]
 
 if settings.DEBUG:  # mapping static and media url when debug is enabled
