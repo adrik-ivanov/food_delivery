@@ -46,11 +46,12 @@ INSTALLED_APPS = [
     'rest_auth',
     'rest_auth.registration',
     'phonenumber_field',
+    'channels',
 
     'apis.user',
     'apis.admins',
     'apis.driver',
-    'apis.channels',
+    'apis.channel',
     'apis.customer',
     'apis.restaurants'
 ]
@@ -64,6 +65,17 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+ASGI_APPLICATION = "nwasellk_backend.routing.application"
+
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels_redis.core.RedisChannelLayer',
+        'CONFIG': {
+            "hosts": [('127.0.0.1', 6379)],
+        },
+    },
+}
 
 SITE_ID = 1
 ROOT_URLCONF = 'nwasellk_backend.urls'
